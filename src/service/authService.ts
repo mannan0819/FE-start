@@ -1,6 +1,5 @@
 const doLogIn = (username: any ) => {
     localStorage.setItem("username", username);
-    localStorage.setItem("isLoggedIn", true);
   };
   
   const isLoggedIn = () => {
