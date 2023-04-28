@@ -15,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import users from "./../../data/users";
 // import image from "./Images/image.jpg";
 import authService from "./../service/authService.ts";
+import { useQuery } from "react-query";
 
 function Copyright() {
   return (
@@ -73,31 +74,33 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignInSide(props: { history: string[]; }) {
 
-  if(authService.isLoggedIn()){
+  if (authService.isLoggedIn()) {
     props.history.push("./home");
   }
 
+  const x = useQuery('data', () => fetch("https:///").then(res => res.json()));
+  console.log(x)
   const classes = useStyles();
-  const [account, setAccount] = React.useState({username:"",password:""});
+  const [account, setAccount] = React.useState({ username: "", password: "" });
 
-  const handelAccount = (property: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
+  const handelAccount = (property: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     // const accountCopy = {...account};
     // accountCopy[property] = event.target.value;
     // setAccount(accountCopy);
   }
 
-  const isVarifiedUser=(username: string, password: string)=>{
-    return users.find((user)=> user.username === username && user.password === password);
+  const isVarifiedUser = (username: string, password: string) => {
+    return users.find((user) => user.username === username && user.password === password);
   };
 
 
-  const handelLogin = ()=>{
-      if(isVarifiedUser(account.username,account.password)){
-        authService.doLogIn(account.username);
-        setAccount({username:"",password:""});
-        props.history.push("/home");
+  const handelLogin = () => {
+    if (isVarifiedUser(account.username, account.password)) {
+      authService.doLogIn(account.username);
+      setAccount({ username: "", password: "" });
+      props.history.push("/home");
 
-      }
+    }
   };
 
   return (
@@ -123,7 +126,7 @@ export default function SignInSide(props: { history: string[]; }) {
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
-            onChange={(event)=>handelAccount("username",event)}
+              onChange={(event) => handelAccount("username", event)}
               variant="outlined"
               margin="normal"
               required
@@ -134,7 +137,7 @@ export default function SignInSide(props: { history: string[]; }) {
               autoFocus
             />
             <TextField
-            onChange={(event)=>handelAccount("password",event)}
+              onChange={(event) => handelAccount("password", event)}
               variant="outlined"
               margin="normal"
               required
@@ -155,7 +158,7 @@ export default function SignInSide(props: { history: string[]; }) {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick = {handelLogin}
+              onClick={handelLogin}
             >
               Sign In
             </Button>
