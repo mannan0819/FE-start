@@ -71,27 +71,23 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function SignInSide(props: any) {
+export default function SignInSide(props: { history: string[]; }) {
 
   if(authService.isLoggedIn()){
     props.history.push("./home");
   }
 
   const classes = useStyles();
-  console.log(typeof classes.root);
   const [account, setAccount] = React.useState({username:"",password:""});
 
-  const handelAccount = (property: any, event: any)=>{
-    const accountCopy:any = {...account};
-    accountCopy[property] = event.target.value;
-    setAccount(accountCopy);
-
+  const handelAccount = (property: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>)=>{
+    // const accountCopy = {...account};
+    // accountCopy[property] = event.target.value;
+    // setAccount(accountCopy);
   }
 
-  const isVarifiedUser=(username: any, password: any)=>{
-
+  const isVarifiedUser=(username: string, password: string)=>{
     return users.find((user)=> user.username === username && user.password === password);
-
   };
 
 
