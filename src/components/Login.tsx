@@ -77,9 +77,13 @@ export default function SignInSide(props: { history: string[]; }) {
   if (authService.isLoggedIn()) {
     props.history.push("./home");
   }
+const apiUrl = import.meta.env.VITE_API_URL ?? '';
+// console.log('apiUrl', apiUrl)
+// console.log('vercel env', process.env)
 
-  const x = useQuery('data', () => fetch("https:///").then(res => res.json()));
-  console.log(x)
+// const x = useQuery('data', () => fetch(apiUrl
+  // ).then(res => res.json()));
+  // console.log(x)
   const classes = useStyles();
   const [account, setAccount] = React.useState({ username: "", password: "" });
 
@@ -89,18 +93,15 @@ export default function SignInSide(props: { history: string[]; }) {
     // setAccount(accountCopy);
   }
 
-  const isVarifiedUser = (username: string, password: string) => {
-    return users.find((user) => user.username === username && user.password === password);
-  };
 
 
-  const handelLogin = () => {
-    if (isVarifiedUser(account.username, account.password)) {
-      authService.doLogIn(account.username);
-      setAccount({ username: "", password: "" });
-      props.history.push("/home");
 
-    }
+  const handelLogin = async () => {
+    console.log('here')
+      const isUserOrUndef = await authService.login(account.username, account.password);
+      // setAccount({ username: "", password: "" });
+      // props.history.push("/home");
+      console.log('end')
   };
 
   return (
@@ -124,7 +125,7 @@ export default function SignInSide(props: { history: string[]; }) {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <div className={classes.form} noValidate>
             <TextField
               onChange={(event) => handelAccount("username", event)}
               variant="outlined"
@@ -172,7 +173,7 @@ export default function SignInSide(props: { history: string[]; }) {
             <Box mt={5}>
               <Copyright />
             </Box>
-          </form>
+          </div>
         </div>
       </Grid>
     </Grid>
