@@ -4,6 +4,7 @@ const doLogIn = (username: any) => {
 
 const login = async (username: string, password: string) => {
   const apiUrl = import.meta.env.VITE_API_URL ?? '';
+
   const user = await fetch(apiUrl + '/user/login', {
     method: 'POST',
     headers: {

@@ -15,7 +15,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import users from "./../../data/users";
 // import image from "./Images/image.jpg";
 import authService from "./../service/authService.ts";
-import { useQuery } from "react-query";
 
 function Copyright() {
   return (
@@ -77,17 +76,18 @@ export default function SignInSide(props: { history: string[]; }) {
   if (authService.isLoggedIn()) {
     props.history.push("./home");
   }
-const apiUrl = import.meta.env.VITE_API_URL ?? '';
-// console.log('apiUrl', apiUrl)
-// console.log('vercel env', process.env)
+  const apiUrl = import.meta.env.VITE_API_URL ?? '';
+  // console.log('apiUrl', apiUrl)
+  // console.log('vercel env', process.env)
 
-// const x = useQuery('data', () => fetch(apiUrl
+  // const x = useQuery('data', () => fetch(apiUrl
   // ).then(res => res.json()));
   // console.log(x)
   const classes = useStyles();
   const [account, setAccount] = React.useState({ username: "", password: "" });
 
   const handelAccount = (property: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setAccount({ ...account, [property]: event.target.value });
     // const accountCopy = {...account};
     // accountCopy[property] = event.target.value;
     // setAccount(accountCopy);
@@ -98,10 +98,10 @@ const apiUrl = import.meta.env.VITE_API_URL ?? '';
 
   const handelLogin = async () => {
     console.log('here')
-      const isUserOrUndef = await authService.login(account.username, account.password);
-      // setAccount({ username: "", password: "" });
-      // props.history.push("/home");
-      console.log('end')
+    const isUserOrUndef = await authService.login(account.username, account.password);
+    // setAccount({ username: "", password: "" });
+    // props.history.push("/home");
+    console.log('end')
   };
 
   return (
@@ -125,7 +125,7 @@ const apiUrl = import.meta.env.VITE_API_URL ?? '';
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <div className={classes.form} noValidate>
+          <div className={classes.form}>
             <TextField
               onChange={(event) => handelAccount("username", event)}
               variant="outlined"
