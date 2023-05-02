@@ -1,4 +1,4 @@
-const doLogIn = (username: any) => {
+const doLogIn = (username: string) => {
   localStorage.setItem("username", username);
 };
 

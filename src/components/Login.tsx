@@ -76,13 +76,7 @@ export default function SignInSide(props: { history: string[]; }) {
   if (authService.isLoggedIn()) {
     props.history.push("./home");
   }
-  const apiUrl = import.meta.env.VITE_API_URL ?? '';
-  // console.log('apiUrl', apiUrl)
-  // console.log('vercel env', process.env)
 
-  // const x = useQuery('data', () => fetch(apiUrl
-  // ).then(res => res.json()));
-  // console.log(x)
   const classes = useStyles();
   const [account, setAccount] = React.useState({ username: "", password: "" });
 
