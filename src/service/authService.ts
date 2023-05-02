@@ -7,6 +7,7 @@ const login = async (username: string, password: string) => {
 
   const user = await fetch(apiUrl + '/user/login', {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
     },
