@@ -16,7 +16,7 @@ import users from "./../../data/users";
 import { useAppSelector, useAppDispatch } from '../store/hooks'
 // import image from "./Images/image.jpg";
 import authService from "./../service/authService.ts";
-import { loginUser } from "../store/user.ts";
+import { login, loginUser } from "../store/user.ts";
 
 function Copyright() {
   return (
@@ -90,9 +90,11 @@ export default function SignInSide(props: { history: string[]; }) {
 
   const handelLogin = async () => {
     console.log('here')
-    dispatch(loginUser({ username: account.username, password: account.password }))
-    // const isUserOrUndef = await authService.login(account.username, account.password);
-    if (userState.isLoggedIn) {
+    // dispatch(loginUser({ username: account.username, password: account.password }));
+    const isUserOrUndef = await authService.login(account.username, account.password);
+    console.log('isUserOrUndef', isUserOrUndef)
+    if (isUserOrUndef) {
+      dispatch(login({userRes: isUserOrUndef}))
       props.history.push("/home");
     }
     // setAccount({ username: "", password: "" });

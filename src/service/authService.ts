@@ -1,8 +1,10 @@
+import { UserResponse } from "../types/UserResponse";
+
 const doLogIn = (username: string) => {
   localStorage.setItem("username", username);
 };
 
-const login = async (username: string, password: string) => {
+const login = async (username: string, password: string): Promise<UserResponse | undefined> => {
   const apiUrl = import.meta.env.VITE_API_URL ?? '';
 
   const res = await fetch(apiUrl + '/user/login', {
@@ -13,6 +15,7 @@ const login = async (username: string, password: string) => {
     },
     body: JSON.stringify({ username, password }),
   });
+  if (!res || !res.ok) return undefined;
   const user = await res.json();
   console.log(user);
   return user;

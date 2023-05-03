@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from './store'
+import { UserResponse } from "../types/UserResponse";
 import authService from '../service/authService'
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
-  async (userInfo: {username: string, password: string}, _thunkAPI) => {
+  async (userInfo: { username: string, password: string }, _thunkAPI) => {
     const user = await authService.login(userInfo.username, userInfo.password)
     return user;
   }
@@ -30,30 +31,27 @@ export const userSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    increment: (state) => {
-      state.isAdmin = true;
-    },
-    decrement: (state) => {
+    login(state, action: PayloadAction<{ UserResponse: UserResponse }>) {
+      state.userId = action.payload.UserResponse.id;
+      state.userName = action.payload.UserResponse.name;
+      state.isAdmin = action.payload.UserResponse.isAdmin;
       state.isLoggedIn = true;
-    },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<string>) => {
-      state.userName = action.payload
     },
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(loginUser.fulfilled, (state, action) => {
-      // Add user to the state array
-      state.isAdmin = (action.payload.isAdmin);
-      state.isLoggedIn = true;
-      state.userId = action.payload.id;
-      state.userName = action.payload.name;
+      if (action.payload) {
+        state.isAdmin = (action.payload.isAdmin);
+        state.isLoggedIn = true;
+        state.userId = action.payload.id;
+        state.userName = action.payload.name;
+      }
     })
   },
 })
 
-export const { increment, decrement, incrementByAmount } = userSlice.actions
+export const { login } = userSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectUserId = (state: RootState) => state.users.userId;
