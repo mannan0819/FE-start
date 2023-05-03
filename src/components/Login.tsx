@@ -94,7 +94,7 @@ export default function SignInSide(props: { history: string[]; }) {
     const isUserOrUndef = await authService.login(account.username, account.password);
     console.log('isUserOrUndef', isUserOrUndef)
     if (isUserOrUndef) {
-      dispatch(login({userRes: isUserOrUndef}))
+      dispatch(login({ UserResponse: isUserOrUndef }))
       props.history.push("/home");
     }
     // setAccount({ username: "", password: "" });
