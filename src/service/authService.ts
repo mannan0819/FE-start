@@ -5,7 +5,7 @@ const doLogIn = (username: string) => {
 const login = async (username: string, password: string) => {
   const apiUrl = import.meta.env.VITE_API_URL ?? '';
 
-  const user = await fetch(apiUrl + '/user/login', {
+  const res = await fetch(apiUrl + '/user/login', {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -13,7 +13,9 @@ const login = async (username: string, password: string) => {
     },
     body: JSON.stringify({ username, password }),
   });
+  const user = await res.json();
   console.log(user);
+  return user;
 }
 
 

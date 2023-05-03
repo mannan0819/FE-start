@@ -13,8 +13,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import users from "./../../data/users";
+import { useAppSelector, useAppDispatch } from '../store/hooks'
 // import image from "./Images/image.jpg";
 import authService from "./../service/authService.ts";
+import { loginUser } from "../store/user.ts";
 
 function Copyright() {
   return (
@@ -79,22 +81,22 @@ export default function SignInSide(props: { history: string[]; }) {
 
   const classes = useStyles();
   const [account, setAccount] = React.useState({ username: "", password: "" });
+  const userState = useAppSelector(state => state.users)
+  const dispatch = useAppDispatch()
 
   const handelAccount = (property: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setAccount({ ...account, [property]: event.target.value });
-    // const accountCopy = {...account};
-    // accountCopy[property] = event.target.value;
-    // setAccount(accountCopy);
   }
-
-
-
 
   const handelLogin = async () => {
     console.log('here')
-    const isUserOrUndef = await authService.login(account.username, account.password);
+    dispatch(loginUser({ username: account.username, password: account.password }))
+    // const isUserOrUndef = await authService.login(account.username, account.password);
+    if (userState.isLoggedIn) {
+      props.history.push("/home");
+    }
     // setAccount({ username: "", password: "" });
-    // props.history.push("/home");
+    // 
     console.log('end')
   };
 
