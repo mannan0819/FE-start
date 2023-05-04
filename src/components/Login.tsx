@@ -12,7 +12,6 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import users from "./../../data/users";
 import { useAppSelector, useAppDispatch } from '../store/hooks'
 // import image from "./Images/image.jpg";
 import authService from "./../service/authService.ts";
@@ -73,11 +72,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function SignInSide(props: { history: string[]; }) {
-
-  if (authService.isLoggedIn()) {
-    props.history.push("./home");
-  }
+export default function SignInSide() {
 
   const classes = useStyles();
   const [account, setAccount] = React.useState({ username: "", password: "" });
@@ -95,7 +90,7 @@ export default function SignInSide(props: { history: string[]; }) {
     console.log('isUserOrUndef', isUserOrUndef)
     if (isUserOrUndef) {
       dispatch(login({ UserResponse: isUserOrUndef }))
-      props.history.push("/home");
+      // props.history.push("/home");
     }
     // setAccount({ username: "", password: "" });
     // 
