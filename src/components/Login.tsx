@@ -15,7 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useAppSelector, useAppDispatch } from '../store/hooks'
 // import image from "./Images/image.jpg";
 import authService from "./../service/authService.ts";
-import { login, loginUser } from "../store/user.ts";
+import { login } from "../store/user.ts";
 
 function Copyright() {
   return (
@@ -76,7 +76,7 @@ export default function SignInSide() {
 
   const classes = useStyles();
   const [account, setAccount] = React.useState({ username: "", password: "" });
-  const userState = useAppSelector(state => state.users)
+  // const userState = useAppSelector(state => state.users)
   const dispatch = useAppDispatch()
 
   const handelAccount = (property: string, event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
