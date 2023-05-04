@@ -12,7 +12,7 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { useAppSelector, useAppDispatch } from '../store/hooks'
+import { useAppDispatch } from '../store/hooks'
 // import image from "./Images/image.jpg";
 import authService from "./../service/authService.ts";
 import { login } from "../store/user.ts";
