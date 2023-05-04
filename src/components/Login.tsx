@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -16,6 +16,7 @@ import { useAppDispatch } from '../store/hooks'
 // import image from "./Images/image.jpg";
 import authService from "./../service/authService.ts";
 import { login } from "../store/user.ts";
+import { useNavigate } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -73,7 +74,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignInSide() {
+  const navigate = useNavigate();
+  const checkedIfLoggedIn = async () => {
+    const isLoggedin = await authService.isLoggedIn();
+    if (isLoggedin) {
+      dispatch(login({ UserResponse: isLoggedin }))
+      navigate('/users')
+    }
+    return isLoggedin;
+  }
 
+  useEffect(() => {
+    checkedIfLoggedIn();
+  }, []);
+
+  // const isLoggedin = authService.isLoggedIn();
   const classes = useStyles();
   const [account, setAccount] = React.useState({ username: "", password: "" });
   // const userState = useAppSelector(state => state.users)

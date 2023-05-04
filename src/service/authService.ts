@@ -22,8 +22,18 @@ const login = async (username: string, password: string): Promise<UserResponse |
 }
 
 
-const isLoggedIn = () => {
-  return Boolean(localStorage.getItem("isLoggedIn"));
+const isLoggedIn = async () => {
+  const apiUrl = import.meta.env.VITE_API_URL ?? '';
+
+  const res = await fetch(apiUrl + '/me', {
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if(!res || !res.body) return undefined;
+  const data = await res.json();
+  return data;
 };
 
 
