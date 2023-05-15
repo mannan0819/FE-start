@@ -78,8 +78,8 @@ export default function SignInSide() {
   const checkedIfLoggedIn = async () => {
     const isLoggedin = await authService.isLoggedIn();
     if (isLoggedin) {
-      dispatch(login({ UserResponse: isLoggedin }))
-      navigate('/users')
+      // dispatch(login({ UserResponse: isLoggedin }))
+      // navigate('/users')
     }
     return isLoggedin;
   }
