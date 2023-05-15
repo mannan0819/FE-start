@@ -16,7 +16,7 @@ import { useAppDispatch } from '../store/hooks'
 // import image from "./Images/image.jpg";
 import authService from "./../service/authService.ts";
 import { login } from "../store/user.ts";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignInSide() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const checkedIfLoggedIn = async () => {
     const isLoggedin = await authService.isLoggedIn();
     if (isLoggedin) {
